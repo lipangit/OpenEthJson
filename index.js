@@ -36,8 +36,7 @@ fs.readFile(KeyPath, 'utf-8', ((err, data) => {
                 var ret = w3.eth.accounts.decrypt(KeyData, password);
                 console.log("succ");
                 exit(0);
-            }
-            catch (e) {
+            } catch (e) {
                 console.log("failed");
             }
             password = '';
