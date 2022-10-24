@@ -97,12 +97,22 @@ function finalFunction(KeyWords) {
     }
     return finalResult
 }
+function repeat(str, num) {
+    if (num == 1) {
+        return str;
+    } else if (num > 1) {
+        return str + repeat(str, num - 1);
+    } else {
+        return "";
+    }
+}
 // **** START ****
 var KeyPath = '';
 var KeyData = '';
 var KeyWords = new Array();
 var FinalKeyWords = new Array();
 var times = '';
+var password = ''
 
 KeyPath = process.argv[2];
 times = process.argv[3];
@@ -124,12 +134,16 @@ console.log('KeyData:', KeyData);
 var w3 = new web3(web3.givenProvider || "ws://localhost:8555");
 
 
-FinalKeyWords.forEach(password => {
-    try {
-        var ret = w3.eth.accounts.decrypt(KeyData, password.join(""));
-        console.log("succ: " + password.join(""));
-        exit(0);
-    } catch (e) {
-        console.log("failed: " + password.join(""));
+FinalKeyWords.forEach(passwordArray => {
+
+    for (var i = 0; i < times; i++) {
+        password = repeat(passwordArray.join(""), i);
+        try {
+            var ret = w3.eth.accounts.decrypt(KeyData, password);
+            console.log("succ: " + password);
+            exit(0);
+        } catch (e) {
+            console.log("failed: " + password);
+        }
     }
 })
