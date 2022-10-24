@@ -126,20 +126,10 @@ var w3 = new web3(web3.givenProvider || "ws://localhost:8555");
 
 FinalKeyWords.forEach(password => {
     try {
-        var ret = w3.eth.accounts.decrypt(KeyData, password);
-        console.log("succ:" + password);
+        var ret = w3.eth.accounts.decrypt(KeyData, password.join(""));
+        console.log("succ: " + password.join(""));
         exit(0);
     } catch (e) {
-        // console.log("failed:" + password);
+        console.log("failed: " + password.join(""));
     }
 })
-
-
-//             for (var i = 0; i < times; i++) {
-//                 password = repeat(key + keyword, 3);
-//                 console.log(password);
-
-//                 password = '';
-//             }
-
-
