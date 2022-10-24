@@ -9,11 +9,6 @@ Array.prototype.contains = function (a) {
     return !1
 };
 
-//测试字符串组合
-// var KeyWords = [1, 2, 3]//这个数组的1-size的组合。从1，2，3，。。到123456 234567 1234567.
-var KeyWords = ['1', '2', '3', '4', '5', '6']
-// var password = '';//拼凑完的密码。
-
 var resultOut = []
 var boardOut = []
 function backtrack(result, board, nums) {
@@ -65,23 +60,37 @@ function removeEmptyItems(originArray) {
     return result
 }
 
-var result1 = firestStep(KeyWords)
-var result2 = []
-for (j = 0; j < result1.length; j++) {
-    if (result1[j] != "") {
-        var ret = removeEmptyItems(result1[j])
-        result2.push(ret)
-        // console.log(ret + " j " + j + " length:" + ret.length)
-    } else {
-        // console.log("kong:" + j)
+function finalFunction(KeyWords) {
+    var result1 = firestStep(KeyWords)
+    var result2 = []
+    for (j = 0; j < result1.length; j++) {
+        if (result1[j] != "") {
+            var ret = removeEmptyItems(result1[j])
+            result2.push(ret)
+        } else {
+            // console.log("kong:" + j)
+        }
     }
+    // console.log(result2)
+    var finalResult = []
+    for (i = 0; i < result2.length; i++) {
+        backtrack(resultOut, boardOut, result2[i])
+        for (j = 0; j < resultOut.length; j++) {
+            var temp = resultOut[j].slice(0)
+            finalResult.push(temp);
+        }
+        boardOut = []
+        resultOut = []
+    }
+    return finalResult
 }
-console.log(result2)
-// var finalResult = []
-// for (i = 0; i < result2.length; i++) {
-//     backtrack(resultOut, boardOut, result2[i])
-//     var temp = resultOut.slice(0)
-//     boardOut = []
-//     resultOut = []
-//     console.log("temp: " + temp)
-// }
+// ***** START *****
+
+//测试字符串组合
+// var KeyWords = [1, 2, 3]//这个数组的1-size的组合。从1，2，3，。。到123456 234567 1234567.
+var KeyWords = ['1', '2', '3', '4', '5', '6']
+// var password = '';//拼凑完的密码。
+
+var finalResult = finalFunction(KeyWords)
+
+console.log(finalResult)
